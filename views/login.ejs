@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/bootstrap.css' />
+    <link rel='stylesheet' href='/stylesheets/floating-labels.css' />
+</head>
+<body style="background-color: #333333">
+<form action="/users/login" method="post" class="form-signin">
+    <div class="text-center mb-4">
+        <img class="mb-4" src="/images/web.svg" alt="" width="72" height="72">
+        <h1 class="h3 mb-3 font-weight-normal" style="color: white;"><i class="fas fa-sign-in-alt"></i><span style="padding-left: 10px">Login</span></h1>
+    </div>
+
+    <div class="form-label-group">
+        <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+        <label for="inputEmail">Email address</label>
+    </div>
+
+    <div class="form-label-group">
+        <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
+        <label for="inputPassword">Password</label>
+    </div>
+
+    <div class="checkbox mb-3">
+        <label style="color: white">
+            <input type="checkbox" value="remember-me"> Remember me
+        </label>
+    </div>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+    <p class="mt-5 mb-3 text-muted text-center"><a href="/">return on main site</a>  &copy;2018</p>
+</form>
+<script src="/javascripts/jquery.min.js"></script>
+<script src="/javascripts/popper.js"></script>
+<script src="/javascripts/bootstrap.js"></script>
+<script src="/javascripts/holder.min.js"></script>
+<script defer src="https://use.fontawesome.com/releases/v5.6.1/js/all.js" integrity="sha384-R5JkiUweZpJjELPWqttAYmYM1P3SNEJRM6ecTQF05pFFtxmCO+Y1CiUhvuDzgSVZ" crossorigin="anonymous"></script>
+</body>
+</html>
