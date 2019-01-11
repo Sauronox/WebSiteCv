@@ -4,12 +4,18 @@ var mongoose = require('mongoose');
 var User     = require('../models/user');
 var passport = require('passport');
 
+var isAuthenticated = function (req, res, next) {
+    if (req.isAuthenticated())
+        return next();
+    res.redirect('/users/login');
+}
+
 /* GET users listing. */
-router.get('/', function(req, res, next) {
+router.get('/', isAuthenticated,function(req, res, next) {
   res.send('respond with a resource');
 });
 
-router.get('/dashboard', function(req, res, next) {
+router.get('/dashboard', isAuthenticated,function(req, res, next) {
     res.render('dashboard', { title: 'Express'  });
 });
 
@@ -18,13 +24,16 @@ router.get('/dashboard', function(req, res, next) {
  * LOGIN LOCAL
  */
 router.get('/login', function(req, res, next) {
+    if(req.isAuthenticated()){
+        res.redirect('/users/');
+    }
     res.render('login', { message: req.flash('error') });
     console.log(req.user);
     console.log(req);
     console.log("Error Message : ",req.flash('error'))
 });
 router.post('/login', passport.authenticate('local-login', {
-        successRedirect: '/',
+        successRedirect: '/users/',
         failureRedirect: '/users/login',
         failureFlash: true
     }));
@@ -42,6 +51,7 @@ router.get('/account', function (req, res) {
         return res.json(newUser);
     });
 })
+
 
 
 // ========================================================
