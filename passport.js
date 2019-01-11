@@ -1,8 +1,8 @@
 var LocalStrategy = require('passport-local').Strategy;
-var User       	  = require('../models/user');
+var User       	  = require('./models/user');
 
 module.exports = function(passport) {
-
+    console.log("Enter in function passport CONF");
     passport.serializeUser(function(user, done) {
         done(null, user.id);
     });
@@ -19,20 +19,21 @@ module.exports = function(passport) {
             passwordField: 'password',
             passReqToCallback: true
         },
-        function (email, password, done) {
-        console.log("Enter in function passport local-login");
+        function (req, email, password, done) {
+            if (email)
+                email = email.toLowerCase();
+        process.nextTick(function () {
             User.findOne({email: email}, function (err, user) {
-                if (err) {
-                    return done(err, false, req.flash('loginMessage','errror in DB'));
-                }
+                if (err) { return done(err); }
                 if (!user) {
-                    return done(null, false, req.flash('loginMessage','Incorrect username.'));
+                    return done(null, false, {message : 'Pas d\'utiliseteur trouver.'});
                 }
                 if (!user.validPassword(password)) {
-                    return done(null, false, req.flash('loginMessage','Incorrect password.'));
+                    return done(null, false, {message : 'Mauvais mot de passe.'});
                 }
-                return done(null, user);
+                else  return done(null, user);
             });
+        })
         }
     ));
 }

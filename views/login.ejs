@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title><%= title %></title>
+    <title>Login</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <link rel='stylesheet' href='/stylesheets/bootstrap.css' />
     <link rel='stylesheet' href='/stylesheets/floating-labels.css' />
@@ -12,15 +12,17 @@
         <img class="mb-4" src="/images/web.svg" alt="" width="72" height="72">
         <h1 class="h3 mb-3 font-weight-normal" style="color: white;"><i class="fas fa-sign-in-alt"></i><span style="padding-left: 10px">Login</span></h1>
     </div>
-
+    <% if (message.length > 0) { %>
+        <div class="alert alert-danger text-center mb-4"><%= message %></div>
+    <% } %>
     <div class="form-label-group">
-        <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-        <label for="inputEmail">Email address</label>
+        <input type="email" name="email" id="email" class="form-control" placeholder="Email address" required autofocus>
+        <label for="email">Email address</label>
     </div>
 
     <div class="form-label-group">
-        <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
-        <label for="inputPassword">Password</label>
+        <input type="password" name="password" id="password" class="form-control" placeholder="Password" required>
+        <label for="password">Password</label>
     </div>
 
     <div class="checkbox mb-3">
