@@ -2,35 +2,231 @@
 <html>
 <head>
     <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-    <link rel='stylesheet' href='/stylesheets/bootstrap.css' />
+    <link rel='stylesheet' href='/stylesheets/bootstrap.css'/>
+    <!-- Custom fonts for this template-->
+    <link href="/stylesheets/all.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <!-- Custom styles for this template-->
+    <link href="/stylesheets/sb-admin.css" rel="stylesheet">
 </head>
-<body class="text-center">
-    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
-        <header class="masthead mb-auto">
-            <div class="inner">
-                <h3 class="masthead-brand">Cover</h3>
-                <nav class="nav nav-masthead justify-content-center">
-                    <a class="nav-link active" href="#">Home</a>
-                    <a class="nav-link" href="#">Features</a>
-                    <a class="nav-link" href="#">Contact</a>
-                </nav>
-            </div>
-        </header>
+<body id="page-top">
 
-        <main role="main" class="inner cover">
-            <h1 class="cover-heading">Cover your page.</h1>
-            <p class="lead">Cover is a one-page template for building simple and beautiful home pages. Download, edit the text, and add your own fullscreen background photo to make it your own.</p>
-            <p class="lead">
-                <a href="#" class="btn btn-lg btn-secondary">Learn more</a>
-            </p>
-        </main>
+<nav class="navbar navbar-expand navbar-dark bg-dark static-top">
 
-        <footer class="mastfoot mt-auto">
-            <div class="inner">
-                <p>Cover template for <a href="https://getbootstrap.com/">Bootstrap</a>, by <a href="https://twitter.com/mdo">@mdo</a>.</p>
+    <a class="navbar-brand mr-1" href="#"><i class="fas fa-user-astronaut fa-lg"></i></a>
+
+    <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Navbar Search -->
+    <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="button">
+                    <i class="fas fa-search"></i>
+                </button>
             </div>
-        </footer>
+        </div>
+    </form>
+
+    <!-- Navbar -->
+    <ul class="navbar-nav ml-auto ml-md-0">
+        <li class="nav-item dropdown no-arrow mx-1">
+            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-bell fa-fw"></i>
+                <span class="badge badge-danger">9+</span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="alertsDropdown">
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Something else here</a>
+            </div>
+        </li>
+        <li class="nav-item dropdown no-arrow mx-1">
+            <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-envelope fa-fw"></i>
+                <span class="badge badge-danger">7</span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="messagesDropdown">
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Something else here</a>
+            </div>
+        </li>
+        <li class="nav-item dropdown no-arrow">
+            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-user-circle fa-fw"></i>        <span><%=user.email.split(".").shift()%></span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                <a class="dropdown-item" href="#">Settings</a>
+                <a class="dropdown-item" href="#">Activity Log</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Logout</a>
+            </div>
+        </li>
+    </ul>
+
+</nav>
+
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    <ul class="sidebar navbar-nav toggled">
+        <li class="nav-item active">
+            <a id="menuNav" class="nav-link" href="overview">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Dashboard</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a id="menuNav" class="nav-link" href="cv">
+                <i class="fas fa-address-card"></i>
+                <span>Cv Manager</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a id="menuNav" class="nav-link" href="portfolios">
+                <i class="fas fa-address-card"></i>
+                <span>Portfolio Manager</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a id="menuNav" class="nav-link" href="#">
+                <i class="fas fa-envelope"></i>
+                <span>Messagerie</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a id="menuNav" class="nav-link" href="#">
+                <i class="fas fa-clipboard-list"></i>
+                <span>Tâches</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a id="menuNav" class="nav-link" href="#">
+                <i class="fas fa-user"></i>
+                <span>Profile</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a id="menuNav" class="nav-link" href="#">
+                <i class="fas fa-cogs"></i>
+                <span>Paramètre</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/users/logout">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Déconnexion</span>
+            </a>
+        </li>
+    </ul>
+
+    <div id="content-wrapper">
+
+        <div class="container-fluid">
+
+            <!-- Breadcrumbs-->
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item ">
+                    <a href="#">Dashboard</a>
+                </li>
+                <% if(path == "/" || path == ""){ %>
+                    <li class="breadcrumb-item active">Overview</li>
+                <%}%>
+                <%if(path.match(/^\//) && path.length > 1){%>
+                <li class="breadcrumb-item active"><%=path.split("/").pop()%></li>
+                <%}%>
+                <!--<li class="breadcrumb-item active">Test</li>-->
+            </ol>
+
+            <!-- Icon Cards-->
+            <div id="main">
+            </div>
+
+
+            <!-- /.container-fluid -->
+
+
+
+        </div>
+        <!-- /.content-wrapper -->
+
     </div>
+    <!-- /#wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="login.html">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/javascripts/jquery.min.js"></script>
+    <script src="/javascripts/popper.js"></script>
+    <script src="/javascripts/bootstrap.js"></script>
+    <script src="/javascripts/holder.min.js"></script>
+    <script src="/javascripts/bootstrap.bundle.min.js"></script>
+    <script src="/javascripts/sb-admin.min.js"></script>
+    <!-- Core plugin JavaScript-->
+    <script src="/javascripts/jquery.easing.min.js"></script>
+    <script>
+        (function(){
+            getPage("overview")
+        })()
+        let navMenu = document.querySelectorAll("#menuNav")
+        for(i=0 ; i<navMenu.length ; i++){
+            navMenu[i].addEventListener("click",function (event) {
+                event.stopPropagation();
+                event.preventDefault();
+                if(this.href.split("/").pop() != "#" && this.href.split("/").pop() != ""){
+                    getPage(this.href.split("/").pop());
+                }else{
+                    getPage("overview")
+                }
+            },true)
+        }
+        function getPage(page){
+            const req = new XMLHttpRequest();
+            req.open('GET', '/users/path/'+page, false);
+            req.send(null);
+
+            if (req.status === 200) {
+                console.log("Réponse reçue:", req.responseText);
+                console.log("test :",req.response)
+                changePageContent(req.response);
+            } else {
+                console.log("Status de la réponse: %d (%s)", req.status, req.statusText);
+            }
+        }
+        function changePageContent(page){
+            let content = document.getElementById("main")
+            content.innerHTML = page
+            Holder.run();
+            //content.innerText = page
+        }
+    </script>
+
 </body>
 </html>
