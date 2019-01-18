@@ -95,25 +95,25 @@
             </a>
         </li>
         <li class="nav-item">
-            <a id="menuNav" class="nav-link" href="#">
+            <a id="menuNav" class="nav-link" href="">
                 <i class="fas fa-envelope"></i>
                 <span>Messagerie</span>
             </a>
         </li>
         <li class="nav-item">
-            <a id="menuNav" class="nav-link" href="#">
+            <a id="menuNav" class="nav-link" href="">
                 <i class="fas fa-clipboard-list"></i>
                 <span>Tâches</span>
             </a>
         </li>
         <li class="nav-item">
-            <a id="menuNav" class="nav-link" href="#">
+            <a id="menuNav" class="nav-link" href="">
                 <i class="fas fa-user"></i>
                 <span>Profile</span>
             </a>
         </li>
         <li class="nav-item">
-            <a id="menuNav" class="nav-link" href="#">
+            <a id="menuNav" class="nav-link" href="">
                 <i class="fas fa-cogs"></i>
                 <span>Paramètre</span>
             </a>
@@ -133,14 +133,9 @@
             <!-- Breadcrumbs-->
             <ol class="breadcrumb">
                 <li class="breadcrumb-item ">
-                    <a href="#">Dashboard</a>
+                    <a id="menuNav" href="overview">Dashboard</a>
                 </li>
-                <% if(path == "/" || path == ""){ %>
-                    <li class="breadcrumb-item active">Overview</li>
-                <%}%>
-                <%if(path.match(/^\//) && path.length > 1){%>
-                <li class="breadcrumb-item active"><%=path.split("/").pop()%></li>
-                <%}%>
+                <li id="breadcrumbRoute" class="breadcrumb-item active"></li>
                 <!--<li class="breadcrumb-item active">Test</li>-->
             </ol>
 
@@ -192,40 +187,123 @@
     <!-- Core plugin JavaScript-->
     <script src="/javascripts/jquery.easing.min.js"></script>
     <script>
-        (function(){
-            getPage("overview")
-        })()
+        // =====================================================================================
+        //                              Route Gestion
+        /**
+         *
+         * @type {{historique: Array, selected: number}}
+         */
+        var route = {
+            historique: [],
+            selected: 0
+        };
+        console.log(route)
+
+        /**
+         *
+         * @param routeName
+         */
+        function addHistoriqueRoute(routeName) {
+            route.historique.push(routeName)
+            route.selected += 1
+        }
+
+        /**
+         *
+         * @returns {boolean}
+         */
+        function previousRoute() {
+            if(route.selected  == 1) return false
+            route.selected -= 1
+            let page = route.historique[route.selected-1];
+
+            const req = new XMLHttpRequest();
+            req.open('GET', '/users/path/'+page, false);
+            req.send(null);
+
+            if (req.status === 200) {
+                document.getElementById("breadcrumbRoute").innerText = page
+                document.getElementById("main").innerHTML = req.response
+                Holder.run();
+            } else {
+                console.log("Status de la réponse: %d (%s)", req.status, req.statusText);
+            }
+        }
+
+        /**
+         *
+         * @returns {boolean}
+         */
+        function nextRoute() {
+            if(route.selected == route.historique.length) return false
+            route.selected += 1
+            let page = route.historique[route.selected-1];
+
+            const req = new XMLHttpRequest();
+            req.open('GET', '/users/path/'+page, false);
+            req.send(null);
+
+            if (req.status === 200) {
+                document.getElementById("breadcrumbRoute").innerText = page
+                document.getElementById("main").innerHTML = req.response
+                Holder.run();
+            } else {
+                console.log("Status de la réponse: %d (%s)", req.status, req.statusText);
+            }
+        }
+        // =======================================================================================
+        //                      Gestion de listener nva menu
+
         let navMenu = document.querySelectorAll("#menuNav")
         for(i=0 ; i<navMenu.length ; i++){
             navMenu[i].addEventListener("click",function (event) {
                 event.stopPropagation();
                 event.preventDefault();
                 if(this.href.split("/").pop() != "#" && this.href.split("/").pop() != ""){
-                    getPage(this.href.split("/").pop());
+
+                    if(!this.className.split(" ").includes("active")){
+                        getPage(this.href.split("/").pop());
+                    }
                 }else{
                     getPage("overview")
                 }
             },true)
         }
+        //================================================================================
+        //                      Fonction de changement de page
+        /**
+         *
+         * @param page
+         */
         function getPage(page){
             const req = new XMLHttpRequest();
             req.open('GET', '/users/path/'+page, false);
             req.send(null);
 
             if (req.status === 200) {
-                console.log("Réponse reçue:", req.responseText);
-                console.log("test :",req.response)
-                changePageContent(req.response);
+                changePageContent(req.response, page);
             } else {
                 console.log("Status de la réponse: %d (%s)", req.status, req.statusText);
             }
         }
-        function changePageContent(page){
-            let content = document.getElementById("main")
-            content.innerHTML = page
+
+        /**
+         *
+         * @param page
+         * @param route
+         */
+        function changePageContent(page,route){
+            addHistoriqueRoute(route)
+            document.getElementById("breadcrumbRoute").innerText = route
+            document.getElementById("main").innerHTML = page
             Holder.run();
             //content.innerText = page
         }
+        // ==============================================================================
+        //                          Init page
+        (function(){
+            getPage("overview")
+        })()
     </script>
 
 </body>
